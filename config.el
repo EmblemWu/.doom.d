@@ -20,10 +20,10 @@
   (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)      ;; remove github icon on footer
   (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-loaded)      ;; remove loaded message
   (add-hook! '+doom-dashboard-functions :append
-             (insert "\n"
-                     (+doom-dashboard--center +doom-dashboard--width
-                       (propertize "Emblem's Emacs."
-                                   'face `(:height 190)))))
+    (insert "\n"
+            (+doom-dashboard--center +doom-dashboard--width
+                                     (propertize "Emblem's Emacs."
+                                                 'face `(:height 190)))))
   (add-hook 'doom-dashboard-mode-hook #'my/hide-cursor-on-dashboard)
   (add-hook 'kill-buffer-hook #'my/restore-cursor-after-dashboard))
 
@@ -41,13 +41,13 @@
 (my/doom-dashboard-config)
 
 (defun my/blur-background-config()
-   (set-face-background 'default "mac:windowBackgroundColor")
+  (set-face-background 'default "mac:windowBackgroundColor")
   (dolist (f (face-list)) (set-face-stipple f "alpha:3%"))
   (setq face-remapping-alist (append face-remapping-alist '((default my/default-blurred))))
   (defface my/default-blurred
-        '((t :inherit 'default :stipple "alpha:3%"))
-   "Like 'default but blurred."
-        :group 'my))
+    '((t :inherit 'default :stipple "alpha:3%"))
+    "Like 'default but blurred."
+    :group 'my))
 
 (when IS-MAC (my/blur-background-config))         ;;make sure you are using emacs-macport, or it would not to work correctly
 
@@ -82,7 +82,7 @@
   ;; 定义了一个用于开启eaf debug模式的函数
   (defun +eaf-enable-debug ()
     (interactive)
-      (setq eaf-enable-debug t))
+    (setq eaf-enable-debug t))
   ;;:custom
   ;; 设定eaf代理
   ;;(eaf-proxy-type "socks5")
@@ -99,19 +99,19 @@
   (require 'eaf-pdf-viewer)
   (require 'eaf-markdown-previewer)
   (require 'eaf-org-previewer)
-  (require 'eaf-evil)
+  ;;  (require 'eaf-evil)
   ;; 使得在eaf buffer下能正常使用evil的keymap
-  (define-key key-translation-map (kbd "SPC")
-    (lambda ()
-      (if (derived-mode-p 'eaf-mode)
-          (pcase eaf--buffer-app-name
-            ("browser" (if  (string= (eaf-call-sync "call_function" eaf--buffer-id "is_focus") "True")
-                           (kbd "SPC")
-                         (kbd eaf-evil-leader-key)))
-            ("pdf-viewer" (kbd eaf-evil-leader-key))
-            ("image-viewer" (kbd eaf-evil-leader-key))
-            (_  (kbd "SPC")))
-        (kbd "SPC"))))
+  ;;  (define-key key-translation-map (kbd "SPC")
+  ;;    (lambda ()
+  ;;      (if (derived-mode-p 'eaf-mode)
+  ;;          (pcase eaf--buffer-app-name
+  ;;            ("browser" (if  (string= (eaf-call-sync "call_function" eaf--buffer-id "is_focus") "True")
+  ;;                           (kbd "SPC")
+  ;;                         (kbd eaf-evil-leader-key)))
+  ;;            ("pdf-viewer" (kbd eaf-evil-leader-key))
+  ;;            ("image-viewer" (kbd eaf-evil-leader-key))
+  ;;            (_  (kbd "SPC")))
+  ;;        (kbd "SPC"))))
   ;; 设定eaf默认搜索引擎
   (setq eaf-browser-default-search-engine "bing")
   ;; 设定eaf开启广告屏蔽器
@@ -119,12 +119,12 @@
   ;; 设定eaf浏览器的缩放
   (setq eaf-browser-default-zoom 1.2)
   ;; 修复鼠标乱跑的问题，让她一直放在左下角
-;;  (setq mouse-avoidance-banish-position '((frame-or-window . frame)
-;;                                          (side . right)
-;;                                          (side-pos . 100)
-;;                                          (top-or-bottom . bottom)
-;;                                          (top-or-bottom-pos . -100)))
-;;  (mouse-avoidance-mode 'banish)
+  ;;  (setq mouse-avoidance-banish-position '((frame-or-window . frame)
+  ;;                                          (side . right)
+  ;;                                          (side-pos . 100)
+  ;;                                          (top-or-bottom . bottom)
+  ;;                                          (top-or-bottom-pos . -100)))
+  ;;  (mouse-avoidance-mode 'banish)
   )
 
 ;;auto-dark-emacs
@@ -193,9 +193,9 @@
         ("C-x t B"   . treemacs-bookmark)
         ;; ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag))
-   (:map treemacs-mode-map
-         ("/" . treemacs-advanced-helpful-hydra))
-)
+  (:map treemacs-mode-map
+        ("/" . treemacs-advanced-helpful-hydra))
+  )
 
 (use-package treemacs-projectile
   :ensure t
@@ -288,7 +288,7 @@
 (add-hook! 'org-babel-after-execute-hook 'org-display-inline-images)
 ;; change latex images cache location
 (defun modify-preview-dir ()
- (setq-local org-preview-latex-image-directory (latex-image-directory)))
+  (setq-local org-preview-latex-image-directory (latex-image-directory)))
 
 (add-hook 'org-mode-hook 'modify-preview-dir)
 
@@ -315,12 +315,12 @@
 
 ;;workspace
 (map!
-  (:when (modulep! :ui workspaces)
-      :desc "New workspace"             "C-c o n"   #'+workspace/new
-      :desc "Save workspace to file"    "C-c o s"   #'+workspace/save
-      :desc "Delete this workspace"     "C-c o d"   #'+workspace/delete
-      :desc "Load workspace from file"  "C-c o l"   #'+workspace/load)
-  :desc "comment/uncomment"  "C-c /" 'comment-or-uncomment-region)
+ (:when (modulep! :ui workspaces)
+   :desc "New workspace"             "C-c o n"   #'+workspace/new
+   :desc "Save workspace to file"    "C-c o s"   #'+workspace/save
+   :desc "Delete this workspace"     "C-c o d"   #'+workspace/delete
+   :desc "Load workspace from file"  "C-c o l"   #'+workspace/load)
+ :desc "comment/uncomment"  "C-c /" 'comment-or-uncomment-region)
 
 (use-package! lsp-mode
   :after-call pre-command-hook
